@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Ball : MonoBehaviour {
     public float speed = 30;
+	private int score_red;
+	private int score_blue;
+	public Text scoreBlueText;
+	public Text scoreRedText;
+	public Text winText;
 
     void Start() {
         // Initial Velocity
         GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+		score_red = 0;
+		score_blue = 0;
+		SetBlueText ();
+		SetRedText ();
+		winText.text = "";
     }
     
     float hitFactor(Vector2 ballPos, Vector2 racketPos,
@@ -39,7 +50,16 @@ public class Ball : MonoBehaviour {
 
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
+
         }
+
+		if (col.gameObject.name == "WallLeft") {
+			score_red = score_red + 1;
+			SetRedText ();
+		}
+
+
+
 
         // Hit the right Racket?
         if (col.gameObject.name == "RacketRight") {
@@ -54,5 +74,28 @@ public class Ball : MonoBehaviour {
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
         }
+
+		if (col.gameObject.name == "WallRight") {
+			score_blue = score_blue + 1;
+			SetBlueText ();
+		}
     }
+
+	void SetBlueText ()
+	{
+		scoreBlueText.text = "Score: " + score_blue.ToString ();
+		if (score_blue >= 11)
+		{
+			winText.text = "Blue Wins!";
+		}
+	}
+
+	void SetRedText ()
+	{
+		scoreRedText.text = "Score: " + score_red.ToString ();
+		if (score_red >= 11)
+		{
+			winText.text = "Red Wins!";
+		}
+	}
 }
