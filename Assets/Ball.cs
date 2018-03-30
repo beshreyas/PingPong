@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
 	public Text scoreRedText;
 	public Text winText;
 
+
     void Start() {
         // Initial Velocity
         GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
@@ -20,6 +21,10 @@ public class Ball : MonoBehaviour {
 		winText.text = "";
     }
     
+
+
+
+
     float hitFactor(Vector2 ballPos, Vector2 racketPos,
                     float racketHeight) {
         // ascii art:
@@ -86,7 +91,9 @@ public class Ball : MonoBehaviour {
 		scoreBlueText.text = "Score: " + score_blue.ToString ();
 		if (score_blue >= 11)
 		{
-			winText.text = "Blue Wins!";
+			
+			StartCoroutine(ShowMessage("Blue Wins!", 5));
+			Application.LoadLevel (Application.loadedLevel);
 		}
 	}
 
@@ -95,7 +102,16 @@ public class Ball : MonoBehaviour {
 		scoreRedText.text = "Score: " + score_red.ToString ();
 		if (score_red >= 11)
 		{
-			winText.text = "Red Wins!";
+			
+			StartCoroutine(ShowMessage("Red Wins!", 5));
+			Application.LoadLevel (Application.loadedLevel);
 		}
 	}
+
+	IEnumerator ShowMessage (string message, float delay) {
+		winText.text = message;
+		yield return new WaitForSeconds(delay);
+		winText.text ="";
+	}
+
 }
