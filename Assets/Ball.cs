@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Ball : MonoBehaviour {
     public float speed = 30;
@@ -10,6 +12,7 @@ public class Ball : MonoBehaviour {
 	public Text scoreRedText;
 	public Text winText;
 
+	public string winner = "";
 
     void Start() {
         // Initial Velocity
@@ -92,8 +95,11 @@ public class Ball : MonoBehaviour {
 		if (score_blue >= 11)
 		{
 			
-			StartCoroutine(ShowMessage("Blue Wins!", 5));
-			Application.LoadLevel (Application.loadedLevel);
+			//StartCoroutine(ShowMessage("Blue Wins!", 200000));
+			winner = "Blue Wins!";
+			PlayerPrefs.SetString ("winner", winner);
+			SceneManager.LoadScene (1);
+
 		}
 	}
 
@@ -103,8 +109,10 @@ public class Ball : MonoBehaviour {
 		if (score_red >= 11)
 		{
 			
-			StartCoroutine(ShowMessage("Red Wins!", 5));
-			Application.LoadLevel (Application.loadedLevel);
+			//StartCoroutine(ShowMessage("Red Wins!", 200000));
+			winner = "Blue Wins!";
+			PlayerPrefs.SetString ("winner", winner);
+			SceneManager.LoadScene (1);
 		}
 	}
 
